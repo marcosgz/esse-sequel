@@ -16,3 +16,4 @@ esse-*.gem
 .tool-versions
 .ruby-version
 
+Gemfile.lock

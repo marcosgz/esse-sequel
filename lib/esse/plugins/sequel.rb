@@ -10,10 +10,11 @@ module Esse
         # @param [Hash] options The options
         # @option options [Integer] :batch_size The batch size for the collection
         # @option options [Hash] :connect_with The database server to run the collection queries on. Ex: `{ server: :read_only }`
-        def collection(*args, **kwargs, &block)
+        def collection(*args, &block)
           unless model_or_dataset?(args.first)
             return super
           end
+          kwargs = args.last.is_a?(Hash) ? args.pop.dup : {}
           model_class = args.shift
 
           repo = Class.new(Esse::Sequel::Collection)
@@ -24,6 +25,9 @@ module Esse
 
           super(repo, *args, **kwargs)
         end
+        # Sequel models and datasets respond to #to_hash, so a **kwargs signature would make
+        # Ruby 2.7 implicitly convert the model argument into keyword arguments.
+        ruby2_keywords(:collection) if respond_to?(:ruby2_keywords, true)
 
         def dataset(**params)
           if @collection_proc.nil?

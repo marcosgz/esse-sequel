@@ -92,5 +92,21 @@ RSpec.describe Esse::Plugins::Sequel, ".collection" do # rubocop:disable RSpec/S
         expect(AnimalsIndex.repo.instance_variable_get(:@collection_proc).foo).to eq("bar")
       end
     end
+
+    context "when the type is not a sequel model" do
+      it "delegates to the default collection definition keeping the keyword arguments" do
+        custom_collection = Class.new { include Enumerable }
+        expect {
+          stub_esse_index(:animals) do
+            plugin :sequel
+
+            repository :animal do
+              collection custom_collection, batch_size: 10
+            end
+          end
+        }.not_to raise_error
+        expect(AnimalsIndex.repo.instance_variable_get(:@collection_proc)).to eq(custom_collection)
+      end
+    end
   end
 end

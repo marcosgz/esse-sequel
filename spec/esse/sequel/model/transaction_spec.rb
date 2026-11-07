@@ -7,6 +7,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback within transactions" do # r
   let(:model_class) do
     Class.new(State) do
       include Esse::Sequel::Model
+
       index_callback "states_index", on: %i[create]
     end
   end

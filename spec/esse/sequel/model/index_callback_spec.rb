@@ -58,6 +58,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "register the model class into Esse::Sequel::Hooks.models" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states_index", on: %i[create]
         end
         expect(Esse::Sequel::Hooks.models).to include(model_class)
@@ -66,6 +67,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "index the model on create" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states_index", on: %i[create]
         end
         model = build_record(model_class, name: "Illinois")
@@ -83,6 +85,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "index the associated model using the block definition" do
         model_class = Class.new(County) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[create] do
             state
           end
@@ -103,6 +106,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not index when the hooks are globally disabled" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[create]
         end
         model = build_record(model_class, name: "Illinois")
@@ -116,6 +120,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not index when the hooks are disabled for the model" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[create]
         end
         model = build_record(model_class, name: "Illinois")
@@ -128,6 +133,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "allows to select which indices will not execute indexing callbacks" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states", on: %i[create]
           index_callback "geographies:state", on: %i[create]
         end
@@ -151,6 +157,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "register the model class into Esse::Sequel::Hooks.models" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states_index", on: %i[update]
         end
         expect(Esse::Sequel::Hooks.models).to include(model_class)
@@ -159,6 +166,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "index the model on update" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states_index", on: %i[update]
         end
         model = create_record(model_class, name: "Illinois")
@@ -176,6 +184,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "index the associated model using the block definition" do
         model_class = Class.new(County) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[update] do
             state
           end
@@ -196,6 +205,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not index when the hooks are globally disabled" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[update]
         end
         model = create_record(model_class, name: "Illinois")
@@ -209,6 +219,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not index when the hooks are disabled for the model" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[update]
         end
         model = create_record(model_class, name: "Illinois")
@@ -221,6 +232,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "allows to select which indices will not execute indexing callbacks" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states", on: %i[update]
           index_callback "geographies:state", on: %i[update]
         end
@@ -243,6 +255,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       let(:model_class) do
         Class.new(County) do
           include Esse::Sequel::Model
+
           index_callback "geographies:county", on: %i[update]
         end
       end
@@ -305,6 +318,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not delete the previous document when the model does not load the dirty plugin" do
         clean_model_class = Class.new(Sequel::Model(:counties)) do
           include Esse::Sequel::Model
+
           many_to_one :state, class: "State"
           index_callback "geographies:county", on: %i[update]
         end
@@ -329,6 +343,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "register the model class into Esse::Sequel::Hooks.models" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states", on: %i[destroy]
         end
         expect(Esse::Sequel::Hooks.models).to include(model_class)
@@ -337,6 +352,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "removes the document on destroy" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states", on: %i[destroy]
         end
         model = create_record(model_class, name: "Illinois")
@@ -350,6 +366,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not raise error when the document does not exist" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[destroy]
         end
         model = create_record(model_class, name: "Illinois")
@@ -363,6 +380,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "removes the associated model using the block definition" do
         model_class = Class.new(County) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[destroy] do
             state
           end
@@ -379,6 +397,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not perform delete request when the hooks are globally disabled" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[destroy]
         end
         model = create_record(model_class, name: "Illinois")
@@ -392,6 +411,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "does not perform delete request when the hooks are disabled for the model" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "geographies:state", on: %i[destroy]
         end
         model = create_record(model_class, name: "Illinois")
@@ -405,6 +425,7 @@ RSpec.describe Esse::Sequel::Model, ".index_callback" do
       it "allows to select which indices will NOT perform :delete request during callbacks" do
         model_class = Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states:state", on: %i[destroy]
           index_callback "geographies:state", on: %i[destroy]
         end

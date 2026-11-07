@@ -2,9 +2,11 @@ inherit_mode:
   merge:
     - Exclude
 
-require:
+plugins:
   - rubocop-performance
   - rubocop-rspec
+
+require:
   - standard/cop/block_single_line_braces
 
 inherit_gem:
