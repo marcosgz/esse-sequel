@@ -32,6 +32,7 @@ jobs:
           - "3.2"
           - "3.3"
           - "3.4"
+          - "4.0.9"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

@@ -46,6 +46,7 @@ GEM
     json (2.9.1)
     language_server-protocol (3.17.0.3)
     lint_roller (1.1.0)
+    logger (1.7.0)
     method_source (1.1.0)
     multi_json (1.15.0)
     parallel (1.26.3)
@@ -126,6 +127,7 @@ DEPENDENCIES
   esse (~> 0.3.4)
   esse-rspec
   esse-sequel!
+  logger
   pry
   rake
   rspec
