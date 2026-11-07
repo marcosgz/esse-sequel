@@ -22,6 +22,7 @@ RSpec.describe Esse::Sequel::Callbacks::UpdateLazyAttribute do
     let(:county_class) do
       Class.new(County) do
         include Esse::Sequel::Model
+
         update_lazy_attribute_callback "states:state", :total_counties do
           state_id
         end

@@ -22,6 +22,7 @@ RSpec.describe Esse::Sequel::Callbacks::IndexingOnUpdate do
     let(:state_class) do
       Class.new(State) do
         include Esse::Sequel::Model
+
         index_callback "states:state", on: :update
       end
     end
@@ -63,6 +64,7 @@ RSpec.describe Esse::Sequel::Callbacks::IndexingOnUpdate do
       let(:state_class) do
         Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states:state", on: :update, with: :update
         end
       end
@@ -101,6 +103,7 @@ RSpec.describe Esse::Sequel::Callbacks::IndexingOnUpdate do
       let(:state_class) do
         Class.new(State) do
           include Esse::Sequel::Model
+
           index_callback "states:state", with: :update
         end
       end
